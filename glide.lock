@@ -1,8 +1,10 @@
-hash: b42287957e557a6de678b5eaa83cd2ccaa0b74895fa081646550dbccde3f6032
-updated: 2017-12-27T11:56:16.592869334+01:00
+hash: f029b124752970a6625678364444fc900b156d097abc3bdbb196704d24e797f3
+updated: 2017-12-27T21:07:07.495617725+01:00
 imports:
 - name: github.com/op/go-logging
   version: 970db520ece77730c7e4724c61121037378659d9
+- name: github.com/streadway/amqp
+  version: 27859d32540aebd2e5befa52dc59ae8e6a0132b6
 - name: github.com/urfave/cli
   version: cfb38830724cc34fedffe9a2a29fb54fa9169cd1
 testImports: []

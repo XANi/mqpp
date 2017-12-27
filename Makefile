@@ -3,7 +3,7 @@ version=$(shell git describe --tags --long --always --dirty|sed 's/^v//')
 binfile=mqpp
 
 all: vendor | glide.lock
-	go build -ldflags "-X main.version=$(version)" $(binfile).go
+	go build -ldflags "-X main.version=$(version)"
 	-@go fmt
 
 static: glide.lock vendor
