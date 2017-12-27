@@ -1,0 +1,6 @@
+package: .
+import:
+- package: github.com/op/go-logging
+- package: github.com/urfave/cli
+  version: < 2.0.0
+
