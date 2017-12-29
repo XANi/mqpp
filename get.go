@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"github.com/XANi/mqpp/backend"
 	"github.com/XANi/mqpp/common"
+	"github.com/XANi/mqpp/util"
 	"github.com/urfave/cli"
 	"os"
 	"sync"
@@ -51,7 +53,7 @@ func Get(c *cli.Context) error {
 					mqConnections.conns[mq] = conn
 					mqConnections.Unlock()
 				} else {
-					if !supressError || true {
+					if !supressError {
 						log.Warningf("connection to %s failed: %s", url, err)
 					}
 				}
@@ -67,10 +69,11 @@ func Get(c *cli.Context) error {
 		go func(k string, v common.Backend) {
 			ch := v.GetDefault()
 			for msg := range ch {
-				log.Infof("%s: %s", k, msg)
+				fmt.Println(util.Format(msg))
 			}
 			log.Warningf("connector %s closed the connection")
 		}(k, v)
 	}
+	_ = <-end
 	return nil
 }

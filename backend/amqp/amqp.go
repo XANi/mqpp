@@ -5,6 +5,7 @@ import (
 
 	"github.com/XANi/mqpp/common"
 	"github.com/streadway/amqp"
+	"strings"
 )
 
 type AMQP struct {
@@ -71,11 +72,8 @@ func (q *AMQP) GetDefault() chan common.Message {
 		c <- common.Message{Body: []byte( "connected to AMQP, consuming messages")}
 		for ev := range events {
 			var msg common.Message
-			msg.Source = fmt.Sprintf(
-				"[%s]%s",
-				ev.Exchange,
-				ev.RoutingKey,
-			)
+			source := strings.Split(ev.RoutingKey,".")
+			msg.Source = append([]string{"[" + ev.Exchange + "]"}, source...)
 			msg.Body = ev.Body
 			msg.Headers = ev.Headers
 			c <- msg

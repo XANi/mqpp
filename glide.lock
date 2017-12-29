@@ -1,10 +1,32 @@
-hash: f029b124752970a6625678364444fc900b156d097abc3bdbb196704d24e797f3
-updated: 2017-12-27T21:07:07.495617725+01:00
+hash: 8576ddc465381f612461c6de2a7faffb51451c8d06bfb0cfe6c254513257f4f6
+updated: 2017-12-29T00:50:32.144917128+01:00
 imports:
+- name: github.com/eclipse/paho.mqtt.golang
+  version: 64d8663555716776a6fa8dbadcb032caf06e0a86
+  subpackages:
+  - packets
+- name: github.com/fatih/color
+  version: 5df930a27be2502f99b292b7cc09ebad4d0891f4
+- name: github.com/mattn/go-colorable
+  version: 5411d3eea5978e6cdc258b30de592b60df6aba96
+  repo: https://github.com/mattn/go-colorable
+- name: github.com/mattn/go-isatty
+  version: 57fdcb988a5c543893cc61bce354a6e24ab70022
+  repo: https://github.com/mattn/go-isatty
 - name: github.com/op/go-logging
   version: 970db520ece77730c7e4724c61121037378659d9
 - name: github.com/streadway/amqp
   version: 27859d32540aebd2e5befa52dc59ae8e6a0132b6
 - name: github.com/urfave/cli
   version: cfb38830724cc34fedffe9a2a29fb54fa9169cd1
+- name: golang.org/x/net
+  version: 9dfe39835686865bff950a07b394c12a98ddc811
+  subpackages:
+  - proxy
+  - websocket
+- name: golang.org/x/sys
+  version: e24f485414aeafb646f6fca458b0bf869c0880a1
+  repo: https://go.googlesource.com/sys
+  subpackages:
+  - unix
 testImports: []

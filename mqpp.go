@@ -16,7 +16,7 @@ var stdout_log_format = logging.MustStringFormatter("%{color:bold}[%{level:.1s}]
 // those need to be mapped to corresponding backend
 var defaultUrls = map[string]string{
 	"amqp": "amqp://guest:guest@localhost",
-	"mqtt": "mqtt://guest:guest@localhost",
+	"mqtt": "tcp://127.0.0.1:1883",
 }
 
 var supportedMQ = []string{}
@@ -68,5 +68,4 @@ func main() {
 		},
 	}
 	app.Run(os.Args)
-	_ = <-end
 }
