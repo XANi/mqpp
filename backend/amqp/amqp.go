@@ -10,9 +10,13 @@ import (
 
 type AMQP struct {
 	conn *amqp.Connection
+	cfg *AMQPConfig
+}
+type AMQPConfig struct {
+	Filter string
 }
 
-func New(url string, opts interface{}) (common.Backend, error) {
+func New(url string, cfg interface{}) (common.Backend, error) {
 	conn, err := amqp.Dial(url)
 	var backend AMQP
 	if err != nil {
@@ -20,6 +24,14 @@ func New(url string, opts interface{}) (common.Backend, error) {
 	}
 
 	backend.conn = conn
+	var c AMQPConfig
+	if cfg != nil {
+		c = cfg.(AMQPConfig)
+	}
+	if len(c.Filter) == 0 {
+		c.Filter = "#"
+	}
+	backend.cfg = &c
 	return &backend, nil
 }
 
@@ -50,7 +62,7 @@ func (q *AMQP) GetDefault() chan common.Message {
 		}
 		err = ch.QueueBind(
 			queue.Name,  // name of the queue
-			"#",         // bindingKey
+			q.cfg.Filter,         // bindingKey
 			"amq.topic", // sourceExchange
 			false,       // noWait
 			nil,         // arguments
@@ -83,5 +95,3 @@ func (q *AMQP) GetDefault() chan common.Message {
 
 	return c
 }
-
-

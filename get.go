@@ -46,7 +46,7 @@ func Get(c *cli.Context) error {
 			wg.Add(1)
 			go func(mq string, url string) {
 				defer wg.Done()
-				conn, err := backend.Connect(mq, url, nil)
+				conn, err := backend.Connect(mq, url, c.GlobalString("topic-filter"))
 				if err == nil {
 					log.Noticef("connected to %s:%s", mq, url)
 					mqConnections.Lock()

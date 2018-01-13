@@ -58,6 +58,11 @@ func main() {
 			Usage:  "MQTT URL (incl. password)",
 			EnvVar: "MQTT_SERVER",
 		},
+		cli.StringFlag{
+			Name:  "topic-filter,filter,topic,t",
+			Value: "#",
+			Usage: "topic filter for queue",
+		},
 	}
 	app.Commands = []cli.Command{
 		{
