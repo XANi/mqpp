@@ -6,6 +6,7 @@ import (
 	"github.com/XANi/mqpp/common"
 	"github.com/streadway/amqp"
 	"strings"
+	"time"
 )
 
 type AMQP struct {
@@ -85,6 +86,12 @@ func (q *AMQP) GetDefault() chan common.Message {
 		for ev := range events {
 			var msg common.Message
 			source := strings.Split(ev.RoutingKey,".")
+			if ev.Timestamp.IsZero() {
+				msg.TS = time.Now()
+			} else {
+				msg.TS = ev.Timestamp
+				msg.TSReliable = true
+			}
 			msg.Source = append([]string{"[" + ev.Exchange + "]"}, source...)
 			msg.Body = ev.Body
 			msg.Headers = ev.Headers

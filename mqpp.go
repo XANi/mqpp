@@ -63,6 +63,11 @@ func main() {
 			Value: "#",
 			Usage: "topic filter for queue",
 		},
+		cli.StringFlag{
+			Name:  "time-format",
+			Value: "",
+			Usage: "Format timestamps (using golang time format), for example '15:04:05.999999'. You can also type 'iso' for shorthand for ISO8601 time format",
+		},
 	}
 	app.Commands = []cli.Command{
 		{

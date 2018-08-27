@@ -6,6 +6,7 @@ import (
 	backend "github.com/XANi/mqpp/common"
     mqtt "github.com/eclipse/paho.mqtt.golang"
 	"strings"
+	"time"
 )
 
 type MQTT struct {
@@ -52,6 +53,8 @@ func (q *MQTT) GetDefault() chan backend.Message {
 	c := make(chan backend.Message, 1)
 	if token := q.conn.Subscribe(q.cfg.Filter, 0, func(client mqtt.Client, msg mqtt.Message) {
 		m := backend.Message{
+			TS: time.Now(),
+			TSReliable: false,
 			Source: strings.Split(msg.Topic(),"/"),
 			Body:   msg.Payload(),
 		}

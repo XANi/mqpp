@@ -8,6 +8,7 @@ import (
 )
 
 type FormatConfig struct {
+	TimeFormat string
 	MetaFormat string
 	HeaderFormat string
 	BodyFormat string
@@ -34,6 +35,14 @@ func Format(m common.Message) string {
 		formattedSource = color.HiGreenString(strings.Join(m.Source,`/`))
 	}
 	var formattedHeaders string
+	var tsString = ""
+	if(!m.TS.IsZero() && len(Formatting.TimeFormat) > 0) {
+		if m.TSReliable {
+			tsString = color.GreenString("%s",m.TS.Format(Formatting.TimeFormat)) + " "
+		} else {
+			tsString = color.YellowString("%s",m.TS.Format(Formatting.TimeFormat)) + " "
+		}
+	}
 	if len(m.Headers) > 0 {
 		var h []string
 		for k, v := range m.Headers {
@@ -50,6 +59,6 @@ func Format(m common.Message) string {
 	} else {
 		outHeaders = color.HiRedString("^---")
 	}
-	out = fmt.Sprintf(Formatting.MetaFormat + ": " + Formatting.BodyFormat, outHeaders, string(m.Body))
+	out = fmt.Sprintf("%s" + Formatting.MetaFormat + ": " + Formatting.BodyFormat, tsString, outHeaders, string(m.Body))
 	return out
 }

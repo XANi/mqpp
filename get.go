@@ -7,6 +7,7 @@ import (
 	"github.com/XANi/mqpp/util"
 	"github.com/urfave/cli"
 	"os"
+	"strings"
 	"sync"
 )
 
@@ -32,6 +33,17 @@ func Get(c *cli.Context) error {
 	if allURLDefault && (c.GlobalString("mq-type") == "") {
 		log.Notice("All queue URLs are default, will try to connect to each one in turn")
 	}
+	if timeFormat := c.GlobalString("time-format"); len(timeFormat) > 0 {
+		switch strings.ToLower(timeFormat) {
+		case "iso":
+			util.Formatting.TimeFormat = "2006-01-02T15:04:05.000Z07:00"
+		case "ts":
+			util.Formatting.TimeFormat = "15:04:05.000"
+		default:
+			util.Formatting.TimeFormat = timeFormat
+		}
+	}
+
 	if c.GlobalString("mq-type") == "" {
 		var wg sync.WaitGroup
 		for _, mq := range supportedMQ {
